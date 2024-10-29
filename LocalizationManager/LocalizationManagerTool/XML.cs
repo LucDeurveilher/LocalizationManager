@@ -14,7 +14,13 @@ namespace LocalizationManagerTool
 
         }
 
+        private void ExportXML()
+        {
+
+        }
+
 
 
     }
+
 }
