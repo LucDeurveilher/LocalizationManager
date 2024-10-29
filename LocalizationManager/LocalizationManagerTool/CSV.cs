@@ -12,7 +12,7 @@ namespace LocalizationManagerTool
     public partial class MainWindow
     {
        
-        private void ImportCsv(string filePath)
+        private void ImportCsv()
         {
             //try
             //{
