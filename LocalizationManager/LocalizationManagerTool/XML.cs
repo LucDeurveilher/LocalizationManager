@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
+using System.Data;
+using System.IO;
 using System.Windows;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace LocalizationManagerTool
 {
@@ -12,9 +11,9 @@ namespace LocalizationManagerTool
     {
         private void ImportXML()
         {
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load(filePath);
+
         }
+
 
 
     }
