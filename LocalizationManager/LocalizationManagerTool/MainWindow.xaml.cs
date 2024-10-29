@@ -18,7 +18,7 @@ namespace LocalizationManagerTool
     public partial class MainWindow : Window
     {
         public List<string> Columns = new List<string>();
-        string filePath;
+         string filePath;
         public MainWindow()
         {
             InitializeComponent();
