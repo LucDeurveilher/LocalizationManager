@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using Microsoft.Win32;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -39,7 +40,16 @@ namespace LocalizationManagerTool
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Fichiers XML (*.xml)|*.xml|Fichiers CSV (*.csv)|*.csv|Fichiers JSON (*.json)|*.json|Tous les fichiers (*.*)|*.*";
 
+            if (openFileDialog.ShowDialog() == true)
+            {
+                string filePath = openFileDialog.FileName;
+                MessageBox.Show("Fichier sélectionné : " + filePath);
+
+                // Vous pouvez également charger le fichier ici si besoin
+            }
         }
 
         private void Button_Edit(object sender, RoutedEventArgs e)
