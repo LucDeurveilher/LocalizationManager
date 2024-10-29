@@ -48,7 +48,19 @@ namespace LocalizationManagerTool
                 filePath = openFileDialog.FileName;
                 MessageBox.Show("Fichier sélectionné : " + filePath);
 
-                // Vous pouvez également charger le fichier ici si besoin
+                string extension = System.IO.Path.GetExtension(filePath);
+                if (extension == ".xml")
+                {
+                    MessageBox.Show("Le fichier est un fichier XML.");
+                }
+                else if (extension == ".json")
+                {
+                    MessageBox.Show("Le fichier est un fichier JSON.");
+                }
+                else
+                {
+                    MessageBox.Show("Format de fichier inconnu.");
+                }
             }
         }
 
