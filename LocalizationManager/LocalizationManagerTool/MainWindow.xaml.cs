@@ -18,7 +18,7 @@ namespace LocalizationManagerTool
     public partial class MainWindow : Window
     {
         public List<string> Columns = new List<string>();
-         string filePath;
+        string filePath;
         public MainWindow()
         {
             InitializeComponent();
@@ -51,16 +51,22 @@ namespace LocalizationManagerTool
                 string extension = System.IO.Path.GetExtension(filePath);
                 if (extension == ".xml")
                 {
-                    MessageBox.Show("Le fichier est un fichier XML.");
+                    ImportXML();
+                }
+                else if (extension == ".csv")
+                {
+                    ImportCsv();
                 }
                 else if (extension == ".json")
                 {
-                    MessageBox.Show("Le fichier est un fichier JSON.");
+                    ImportJson();
+;
                 }
                 else
                 {
                     MessageBox.Show("Format de fichier inconnu.");
                 }
+
             }
         }
 
@@ -70,5 +76,5 @@ namespace LocalizationManagerTool
         }
     }
 
-    
+
 }
