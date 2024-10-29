@@ -24,7 +24,6 @@ namespace LocalizationManagerTool
                 {
                     // Nettoyer la DataTable avant de la remplir
                     dataTable.Clear();
-                    dataTable.Columns.Clear();
 
                     // Lire les en-têtes
                     string[] headers = sr.ReadLine().Split(',');
