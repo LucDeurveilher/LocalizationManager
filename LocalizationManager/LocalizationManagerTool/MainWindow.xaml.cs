@@ -18,7 +18,7 @@ namespace LocalizationManagerTool
     public partial class MainWindow : Window
     {
         public List<string> Columns = new List<string>();
-
+        string filePath;
         public MainWindow()
         {
             InitializeComponent();
@@ -45,7 +45,7 @@ namespace LocalizationManagerTool
 
             if (openFileDialog.ShowDialog() == true)
             {
-                string filePath = openFileDialog.FileName;
+                filePath = openFileDialog.FileName;
                 MessageBox.Show("Fichier sélectionné : " + filePath);
 
                 // Vous pouvez également charger le fichier ici si besoin
