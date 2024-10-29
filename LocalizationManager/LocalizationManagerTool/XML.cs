@@ -13,7 +13,7 @@ namespace LocalizationManagerTool
         private void ImportXML()
         {
             XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load("chemin_du_fichier.xml");
+            xmlDoc.Load(filePath);
         }
 
 
