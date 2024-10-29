@@ -12,9 +12,12 @@ namespace LocalizationManagerTool
     public partial class MainWindow
     {
         private DataTable dataTable;
-
         private void ImportCsv()
         {
+            // Initialize the DataTable
+            dataTable = new DataTable();
+            dataGrid.ItemsSource = dataTable.DefaultView;
+
             try
             {
                 using (StreamReader sr = new StreamReader(filePath))
