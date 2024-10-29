@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -26,7 +27,7 @@ namespace LocalizationManagerTool
                     dataTable.Clear();
 
                     // Lire les en-têtes
-                    string[] headers = sr.ReadLine().Split(',');
+                    string[] headers = sr.ReadLine().Split(';');
                     foreach (var header in headers)
                     {
                         if (!dataTable.Columns.Contains(header))
@@ -38,7 +39,7 @@ namespace LocalizationManagerTool
                     // Lire les lignes du fichier CSV
                     while (!sr.EndOfStream)
                     {
-                        string[] rows = sr.ReadLine().Split(',');
+                        string[] rows = sr.ReadLine().Split(';');
                         DataRow dataRow = dataTable.NewRow();
                         for (int i = 0; i < headers.Length; i++)
                         {
@@ -53,5 +54,41 @@ namespace LocalizationManagerTool
                 MessageBox.Show($"Erreur lors de l'importation du fichier : {ex.Message}");
             }
         }
+
+        private void ExportCsv()
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Filter = "Fichiers CSV (*.csv)|*.csv|Tous les fichiers (*.*)|*.*",
+                FileName = "export.csv"
+            };
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                try
+                {
+                    using (StreamWriter sw = new StreamWriter(saveFileDialog.FileName, false, Encoding.UTF8))
+                    {
+                        // Write headers
+                        string headerLine = string.Join(";", dataTable.Columns.Cast<DataColumn>().Select(column => column.ColumnName));
+                        sw.WriteLine(headerLine);
+
+                        // Write data
+                        foreach (DataRow row in dataTable.Rows)
+                        {
+                            string rowLine = string.Join(";", row.ItemArray.Select(item => item.ToString()));
+                            sw.WriteLine(rowLine);
+                        }
+                    }
+                    MessageBox.Show("Exportation réussie!");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Erreur lors de l'exportation : {ex.Message}");
+                }
+            }
+        }
     }
+
+
 }
