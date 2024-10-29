@@ -60,7 +60,6 @@ namespace LocalizationManagerTool
                 else if (extension == ".json")
                 {
                     ImportJson();
-;
                 }
                 else
                 {
