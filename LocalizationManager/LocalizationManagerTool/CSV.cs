@@ -13,12 +13,9 @@ namespace LocalizationManagerTool
 {
     public partial class MainWindow
     {
-         
         private void ImportCsv()
         {
-            // Initialize the DataTable
-            dataTable = new DataTable();
-            dataGrid.Columns.Clear();
+            //dataGrid.Columns.Clear();
 
             try
             {
