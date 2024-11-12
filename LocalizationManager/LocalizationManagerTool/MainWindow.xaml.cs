@@ -96,9 +96,17 @@ namespace LocalizationManagerTool
             }
         }
 
+        private void AddRow_Click(object sender, RoutedEventArgs e)
+        {
+            DataRow dataRow = dataTable.NewRow();
+            dataTable.Rows.Add(dataRow);
+
+            dataGrid.ItemsSource = dataTable.DefaultView;
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-          
+
         }
 
         private void Button_Edit(object sender, RoutedEventArgs e)

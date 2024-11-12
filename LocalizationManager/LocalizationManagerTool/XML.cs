@@ -30,12 +30,14 @@ namespace LocalizationManagerTool
             {
                 DataRow dataRow = dataTable.NewRow();
 
+                string id = word.Element("Id")?.Value;
                 string enUS = word.Element("EnUS")?.Value;
                 string frFR = word.Element("FrFR")?.Value;
                 string jaJP = word.Element("JaJP")?.Value;
 
                 Console.WriteLine($"EN: {enUS}, FR: {frFR}, JP: {jaJP}");
 
+                dataRow["id"] = id;
                 dataRow["en"] = enUS;
                 dataRow["fr"] = frFR;
                 dataRow["jp"] = jaJP;
@@ -44,8 +46,6 @@ namespace LocalizationManagerTool
             }
             dataGrid.ItemsSource = dataTable.DefaultView;
         }
-
-
 
 
         public void ExportXML(string filePath)
@@ -57,6 +57,7 @@ namespace LocalizationManagerTool
                 string rowLine = string.Join(";", row.ItemArray.Select(item => item.ToString()));
                 Word word = new Word();
 
+                word.Id = rowLine.Split(';')[(int)LANGUAGE.ID];
                 word.EnUS = rowLine.Split(';')[(int)LANGUAGE.EN];
                 word.FrFR = rowLine.Split(';')[(int)LANGUAGE.FR];
                 word.JaJP = rowLine.Split(';')[(int)LANGUAGE.JP];

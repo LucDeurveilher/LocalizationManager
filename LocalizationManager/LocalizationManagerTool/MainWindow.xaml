@@ -12,7 +12,9 @@
                 <MenuItem Header="Import" Click="ImportMenuItem_Click"/>
                 <MenuItem Header="Export" Click="ExportMenuItem_Click"/>
             </MenuItem>
-            <MenuItem Header="Edit" Click="Button_Edit"/>
+            <MenuItem Header="Edit">
+                <MenuItem Header="Add Row" Click="AddRow_Click"/>
+            </MenuItem>
         </Menu>
         <DataGrid Name="dataGrid" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,22,0,0"/>
     </Grid>
