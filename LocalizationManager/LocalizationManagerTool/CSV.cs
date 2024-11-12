@@ -69,7 +69,6 @@ namespace LocalizationManagerTool
 
         private void ExportCsv(string filePath)
         {
-
             try
             {
                 using (StreamWriter sw = new StreamWriter(filePath, false, Encoding.UTF8))
