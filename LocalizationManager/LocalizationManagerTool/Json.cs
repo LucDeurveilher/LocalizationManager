@@ -21,17 +21,14 @@ namespace LocalizationManagerTool
             MessageBox.Show("La fonction est appelée !");
             string json = File.ReadAllText(filePath);
             List<Word> translation = JsonConvert.DeserializeObject<List<Word>>(json);
-            dataTable.Columns.Add("EnUS", typeof(string));
-            dataTable.Columns.Add("FrFR", typeof(string));
-            dataTable.Columns.Add("EsES", typeof(string));
-            dataTable.Columns.Add("JaJP", typeof(string));
+            
             foreach (Word word in translation)
             {
                 DataRow row = dataTable.NewRow();
-                row["EnUS"] = word.EnUS;
-                row["FrFR"] = word.FrFR;
-                row["EsES"] = word.EsES;
-                row["JaJP"] = word.JaJP;
+                row["ID"] = word.Id;
+                row["EN"] = word.EnUS;
+                row["FR"] = word.FrFR;
+                row["JP"] = word.JaJP;
                 dataTable.Rows.Add(row);
 
             }
@@ -43,10 +40,11 @@ namespace LocalizationManagerTool
             foreach (DataRow row in dataTable.Rows)
             {
                 Word word = new Word();
-                word.EnUS = row.ItemArray.GetValue(0).ToString() ?? "";
-                word.FrFR = row.ItemArray.GetValue(1).ToString() ?? "";
-                word.EsES = row.ItemArray.GetValue(2).ToString() ?? "";
-                word.JaJP = row.ItemArray.GetValue(3).ToString() ?? "";
+                word.Id = row.ItemArray.GetValue(0).ToString() ?? "";
+                word.EnUS = row.ItemArray.GetValue(1).ToString() ?? "";
+                word.FrFR = row.ItemArray.GetValue(2).ToString() ?? "";
+                word.EsES = row.ItemArray.GetValue(3).ToString() ?? "";
+                word.JaJP = row.ItemArray.GetValue(4).ToString() ?? "";
                 words.Add(word);
             }
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(words);
