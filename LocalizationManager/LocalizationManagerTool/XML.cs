@@ -23,10 +23,6 @@ namespace LocalizationManagerTool
         {
             XDocument xdoc = XDocument.Load(filePath);
             var words = xdoc.Descendants("Word");
-
-
-
-
             dataTable.Clear();
 
 
@@ -47,7 +43,6 @@ namespace LocalizationManagerTool
                 dataTable.Rows.Add(dataRow);
             }
             dataGrid.ItemsSource = dataTable.DefaultView;
-            Console.WriteLine($"Nombre de lignes ajoutées : {dataTable.Rows.Count}");
         }
 
 

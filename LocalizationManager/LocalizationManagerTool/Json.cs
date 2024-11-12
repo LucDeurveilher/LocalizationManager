@@ -61,6 +61,7 @@ namespace LocalizationManagerTool
 [JsonObject(MemberSerialization.OptIn)]
 public class Word
 {
+    public string Id { get; set; }
     [JsonProperty]
     public string EnUS { get; set; }
     [JsonProperty]
