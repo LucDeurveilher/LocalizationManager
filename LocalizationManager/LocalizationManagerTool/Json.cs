@@ -16,7 +16,7 @@ namespace LocalizationManagerTool
         private void ImportJson()
         {
 
-            TestJson();
+            
             //MessageBox.Show("La fonction est appelée !");
             //string json = File.ReadAllText(filePath);
 
@@ -26,10 +26,10 @@ namespace LocalizationManagerTool
             //    MessageBox.Show(translation.words[i].FrFR + translation.words[i].EnUS + translation.words[i].JaJP);
             //}
         }
-        void TestJson()
+        void ExportJson(string filePath)
         {
             List<Word> words = new List<Word>();
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < words.Count(); i++)
             {
                 Word word = new Word();
                 word.EnUS = "A";
@@ -38,7 +38,7 @@ namespace LocalizationManagerTool
                 words.Add(word);
             }
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(words);
-            StreamWriter sw = new StreamWriter("ToolTipOpening.txt",false);
+            StreamWriter sw = new StreamWriter(filePath, false);
             sw.Write(json);
             sw.Close();
         }
