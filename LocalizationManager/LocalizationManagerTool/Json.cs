@@ -9,6 +9,7 @@ using System.IO;
 using System.Collections.Specialized;
 using System.Windows;
 using System.Text.Json.Serialization;
+using System.Data;
 namespace LocalizationManagerTool
 {
     public partial class MainWindow
@@ -17,24 +18,35 @@ namespace LocalizationManagerTool
         {
 
             
-            //MessageBox.Show("La fonction est appelée !");
-            //string json = File.ReadAllText(filePath);
+            MessageBox.Show("La fonction est appelée !");
+            string json = File.ReadAllText(filePath);
+            List<Word> translation = JsonConvert.DeserializeObject<List<Word>>(json);
+            dataTable.Columns.Add("EnUS", typeof(string));
+            dataTable.Columns.Add("FrFR", typeof(string));
+            dataTable.Columns.Add("EsES", typeof(string));
+            dataTable.Columns.Add("JaJP", typeof(string));
+            foreach (Word word in translation)
+            {
+                DataRow row = dataTable.NewRow();
+                row["EnUS"] = word.EnUS;
+                row["FrFR"] = word.FrFR;
+                row["EsES"] = word.EsES;
+                row["JaJP"] = word.JaJP;
+                dataTable.Rows.Add(row);
 
-            //Translation translation = JsonConvert.DeserializeObject<Translation>(json);
-            //for (int i = 0; i < translation.words.Count; i++)
-            //{
-            //    MessageBox.Show(translation.words[i].FrFR + translation.words[i].EnUS + translation.words[i].JaJP);
-            //}
+            }
+            dataGrid.ItemsSource = dataTable.DefaultView;
         }
         void ExportJson(string filePath)
         {
             List<Word> words = new List<Word>();
-            for (int i = 0; i < words.Count(); i++)
+            foreach (DataRow row in dataTable.Rows)
             {
                 Word word = new Word();
-                word.EnUS = "A";
-                word.FrFR = "A";
-                word.JaJP = "A";
+                word.EnUS = row.ItemArray.GetValue(0).ToString() ?? "";
+                word.FrFR = row.ItemArray.GetValue(1).ToString() ?? "";
+                word.EsES = row.ItemArray.GetValue(2).ToString() ?? "";
+                word.JaJP = row.ItemArray.GetValue(3).ToString() ?? "";
                 words.Add(word);
             }
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(words);
@@ -53,7 +65,12 @@ public class Word
     public string EnUS { get; set; }
     [JsonProperty]
     public string FrFR { get; set; }
+
     [JsonProperty]
+    public string EsES { get; set; }
+
+    [JsonProperty]
+
     public string JaJP { get; set; }
 }
 
