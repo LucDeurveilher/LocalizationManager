@@ -20,6 +20,7 @@ namespace LocalizationManagerTool
     {
         public List<string> Columns = new List<string>();
         string filePath;
+        private DataTable dataTable;
         public MainWindow()
         {
             InitializeComponent();
