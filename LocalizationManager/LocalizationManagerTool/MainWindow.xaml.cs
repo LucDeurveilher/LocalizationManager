@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using System.Data;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,19 +23,13 @@ namespace LocalizationManagerTool
         public MainWindow()
         {
             InitializeComponent();
-            Columns.Add("id");
-            Columns.Add("en");
-            Columns.Add("fr");
-            Columns.Add("ja");
+            dataTable = new DataTable();
+            dataTable.Columns.Add("ID");
+            dataTable.Columns.Add("EN");
+            dataTable.Columns.Add("FR");
+            dataTable.Columns.Add("JP");
+            dataGrid.ItemsSource = dataTable.DefaultView;
 
-            foreach (string column in Columns)
-            {
-                //Pour ajouter une colonne à notre datagrid
-                DataGridTextColumn textColumn = new DataGridTextColumn();
-                textColumn.Header = column;
-                textColumn.Binding = new Binding(column);
-                dataGrid.Columns.Add(textColumn);
-            }
         }
 
         private void ImportMenuItem_Click(object sender, RoutedEventArgs e)

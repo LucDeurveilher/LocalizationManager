@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Data;
 using System.IO;
+using System.Reflection.PortableExecutable;
 using System.Windows;
 using System.Xml;
 using System.Xml.Linq;
@@ -14,35 +15,41 @@ namespace LocalizationManagerTool
         private enum LANGUAGE
         {
             ID,
-            FR,
             EN,
+            FR,
             JP
         }
         public void ImportXML(string filePath)
         {
-            List<Word> words = DeserializeFromXml(filePath);
+            XDocument xdoc = XDocument.Load(filePath);
+            var words = xdoc.Descendants("Word");
 
-            foreach (Word word in words)
+
+
+
+            dataTable.Clear();
+
+
+            foreach (var word in words)
             {
-                DataRow row = dataTable.NewRow();
+                DataRow dataRow = dataTable.NewRow();
 
-                row[(int)LANGUAGE.FR] = word.FrFR;
-                row[(int)LANGUAGE.EN] = word.EnUS;
-                row[(int)LANGUAGE.JP] = word.JaJP;
+                string enUS = word.Element("EnUS")?.Value;
+                string frFR = word.Element("FrFR")?.Value;
+                string jaJP = word.Element("JaJP")?.Value;
 
-                dataTable.Rows.Add(row);
+                Console.WriteLine($"EN: {enUS}, FR: {frFR}, JP: {jaJP}");
+
+                dataRow["en"] = enUS;
+                dataRow["fr"] = frFR;
+                dataRow["jp"] = jaJP;
+
+                dataTable.Rows.Add(dataRow);
             }
+            dataGrid.ItemsSource = dataTable.DefaultView;
+            Console.WriteLine($"Nombre de lignes ajoutées : {dataTable.Rows.Count}");
         }
 
-        private List<Word> DeserializeFromXml(string filePath)
-        {
-            XmlSerializer serializer = new XmlSerializer(typeof(Words));
-            using (FileStream fs = new FileStream(filePath, FileMode.Open))
-            {
-                Words words = (Words)serializer.Deserialize(fs);
-                return words.WordList;
-            }
-        }
 
 
 
@@ -55,8 +62,8 @@ namespace LocalizationManagerTool
                 string rowLine = string.Join(";", row.ItemArray.Select(item => item.ToString()));
                 Word word = new Word();
 
-                word.EnUS = rowLine.Split(';')[(int)LANGUAGE.FR];
-                word.FrFR = rowLine.Split(';')[(int)LANGUAGE.EN];
+                word.EnUS = rowLine.Split(';')[(int)LANGUAGE.EN];
+                word.FrFR = rowLine.Split(';')[(int)LANGUAGE.FR];
                 word.JaJP = rowLine.Split(';')[(int)LANGUAGE.JP];
                 words.Add(word);
             }
@@ -76,13 +83,6 @@ namespace LocalizationManagerTool
             Console.WriteLine($"Le fichier XML a été créé : {filePath}");
         }
 
-    }
-
-    [XmlRoot("Words")]
-    public class Words
-    {
-        [XmlElement("Word")]
-        public List<Word> WordList { get; set; }
     }
 
 }
