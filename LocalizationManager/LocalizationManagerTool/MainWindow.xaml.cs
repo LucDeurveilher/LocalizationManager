@@ -38,7 +38,7 @@ namespace LocalizationManagerTool
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ImportMenuItem_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Fichiers XML (*.xml)|*.xml|Fichiers CSV (*.csv)|*.csv|Fichiers JSON (*.json)|*.json|Tous les fichiers (*.*)|*.*";
@@ -49,6 +49,7 @@ namespace LocalizationManagerTool
                 MessageBox.Show("Fichier sélectionné : " + filePath);
 
                 string extension = System.IO.Path.GetExtension(filePath);
+
                 if (extension == ".xml")
                 {
                     ImportXML();
@@ -67,6 +68,16 @@ namespace LocalizationManagerTool
                 }
 
             }
+        }
+
+        private void ExportMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            ExportXML();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+          
         }
 
         private void Button_Edit(object sender, RoutedEventArgs e)

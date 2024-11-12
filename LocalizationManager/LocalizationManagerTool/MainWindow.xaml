@@ -8,10 +8,12 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid VerticalAlignment="Top" Margin="0,0,0,-1">
         <Menu VerticalAlignment="Top" Height="22">
-            <Button Content="File" Click="Button_Click"/>
-            <Button Content="Edit" Click="Button_Edit"/>
+            <MenuItem Header="File">
+                <MenuItem Header="Import" Click="ImportMenuItem_Click"/>
+                <MenuItem Header="Export" Click="ExportMenuItem_Click"/>
+            </MenuItem>
+            <MenuItem Header="Edit" Click="Button_Edit"/>
         </Menu>
         <DataGrid Name="dataGrid" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,22,0,0"/>
-
     </Grid>
 </Window>
