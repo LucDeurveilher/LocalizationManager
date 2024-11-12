@@ -15,7 +15,7 @@ namespace LocalizationManagerTool
 
         }
 
-        public void ExportXML()
+        public void ExportXML(string filePath)
         {
             List<Word> words = new List<Word>();
 
@@ -30,7 +30,6 @@ namespace LocalizationManagerTool
                 words.Add(word);
             }
 
-            string filePath = "words.xml"; // Spécifiez le chemin où vous voulez enregistrer le fichier
             SerializeToXml(words, filePath);
         }
 

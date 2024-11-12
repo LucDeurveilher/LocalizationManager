@@ -72,7 +72,33 @@ namespace LocalizationManagerTool
 
         private void ExportMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            ExportXML();
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Fichiers XML (*.xml)|*.xml|Fichiers CSV (*.csv)|*.csv|Fichiers JSON (*.json)|*.json";
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                string filePath = saveFileDialog.FileName;
+                MessageBox.Show("Emplacement de sauvegarde : " + filePath);
+
+                string extension = System.IO.Path.GetExtension(filePath);
+
+                if (extension == ".xml")
+                {
+                    ExportXML(filePath);
+                }
+                else if (extension == ".csv")
+                {
+                    ExportCsv(filePath);
+                }
+                else if (extension == ".json")
+                {
+                    ExportJson(filePath);
+                }
+                else
+                {
+                    MessageBox.Show("Format de fichier inconnu.");
+                }
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
