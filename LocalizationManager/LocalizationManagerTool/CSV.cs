@@ -67,38 +67,31 @@ namespace LocalizationManagerTool
             }
         }
 
-        private void ExportCsv()
+        private void ExportCsv(string filePath)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog
-            {
-                Filter = "Fichiers CSV (*.csv)|*.csv|Tous les fichiers (*.*)|*.*",
-                FileName = "export.csv"
-            };
 
-            if (saveFileDialog.ShowDialog() == true)
+            try
             {
-                try
+                using (StreamWriter sw = new StreamWriter(filePath, false, Encoding.UTF8))
                 {
-                    using (StreamWriter sw = new StreamWriter(saveFileDialog.FileName, false, Encoding.UTF8))
+                    // Write headers
+                    string headerLine = string.Join(";", dataTable.Columns.Cast<DataColumn>().Select(column => column.ColumnName));
+                    sw.WriteLine(headerLine);
+
+                    // Write data
+                    foreach (DataRow row in dataTable.Rows)
                     {
-                        // Write headers
-                        string headerLine = string.Join(";", dataTable.Columns.Cast<DataColumn>().Select(column => column.ColumnName));
-                        sw.WriteLine(headerLine);
-
-                        // Write data
-                        foreach (DataRow row in dataTable.Rows)
-                        {
-                            string rowLine = string.Join(";", row.ItemArray.Select(item => item.ToString()));
-                            sw.WriteLine(rowLine);
-                        }
+                        string rowLine = string.Join(";", row.ItemArray.Select(item => item.ToString()));
+                        sw.WriteLine(rowLine);
                     }
-                    MessageBox.Show("Exportation réussie!");
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Erreur lors de l'exportation : {ex.Message}");
-                }
+                MessageBox.Show("Exportation réussie!");
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erreur lors de l'exportation : {ex.Message}");
+            }
+
         }
     }
 
