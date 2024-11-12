@@ -50,21 +50,21 @@ namespace LocalizationManagerTool
 
         public void ExportXML(string filePath)
         {
-            List<Word> words = new List<Word>();
+            //List<Word> words = new List<Word>();
 
-            foreach (DataRow row in dataTable.Rows)
-            {
-                string rowLine = string.Join(";", row.ItemArray.Select(item => item.ToString()));
-                Word word = new Word();
+            //foreach (DataRow row in dataTable.Rows)
+            //{
+            //    string rowLine = string.Join(";", row.ItemArray.Select(item => item.ToString()));
+            //    Word word = new Word();
 
-                word.Id = rowLine.Split(';')[(int)LANGUAGE.ID];
-                word.EnUS = rowLine.Split(';')[(int)LANGUAGE.EN];
-                word.FrFR = rowLine.Split(';')[(int)LANGUAGE.FR];
-                word.JaJP = rowLine.Split(';')[(int)LANGUAGE.JP];
-                words.Add(word);
-            }
+            //    word.Id = rowLine.Split(';')[(int)LANGUAGE.ID];
+            //    word.EnUS = rowLine.Split(';')[(int)LANGUAGE.EN];
+            //    word.FrFR = rowLine.Split(';')[(int)LANGUAGE.FR];
+            //    word.JaJP = rowLine.Split(';')[(int)LANGUAGE.JP];
+            //    words.Add(word);
+            //}
 
-            SerializeToXml(words, filePath);
+            //SerializeToXml(words, filePath);
         }
 
         public static void SerializeToXml(List<Word> words, string filePath)

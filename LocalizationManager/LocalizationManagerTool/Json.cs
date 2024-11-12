@@ -18,19 +18,23 @@ namespace LocalizationManagerTool
         {
 
             
+            MessageBox.Show("La fonction est appelée !");
             string json = File.ReadAllText(filePath);
+            DataTable dataTable = new DataTable();
             List<Word> translation = JsonConvert.DeserializeObject<List<Word>>(json);
-            
+            foreach (var translationItem in translation[0].words.Keys)
+            {
+                Columns.Add(translationItem);
+            }
             foreach (Word word in translation)
             {
-                DataRow row = dataTable.NewRow();
-                row["ID"] = word.Id;
-                row["EN"] = word.EnUS;
-                row["FR"] = word.FrFR;
-                row["JP"] = word.JaJP;
-                dataTable.Rows.Add(row);
+               
+                    DataRow row = dataTable.NewRow();
+                    dataTable.Rows.Add(row);
+                
 
             }
+
             dataGrid.ItemsSource = dataTable.DefaultView;
         }
         void ExportJson(string filePath)
@@ -39,11 +43,14 @@ namespace LocalizationManagerTool
             foreach (DataRow row in dataTable.Rows)
             {
                 Word word = new Word();
-                word.Id = row.ItemArray.GetValue(0).ToString() ?? "";
-                word.EnUS = row.ItemArray.GetValue(1).ToString() ?? "";
-                word.FrFR = row.ItemArray.GetValue(2).ToString() ?? "";
-                word.EsES = row.ItemArray.GetValue(3).ToString() ?? "";
-                word.JaJP = row.ItemArray.GetValue(4).ToString() ?? "";
+                for (int i = 0; i < dataTable.Columns.Count; i++)
+                {
+                    DataColumn column = dataTable.Columns[i];
+                    string name = column.ToString();
+                    word.words.Add(name, row.ItemArray.GetValue(i).ToString());
+
+                }
+
                 words.Add(word);
             }
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(words);
@@ -60,9 +67,4 @@ public class Word
 {
     [JsonProperty]
     public Dictionary<string, string> words { get; set; }
-}
-
-public class Translation
-{
-    public Dictionary<int,Word> words = new Dictionary<int, Word>();
 }
