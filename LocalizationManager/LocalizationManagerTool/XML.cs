@@ -10,23 +10,54 @@ namespace LocalizationManagerTool
 {
     public partial class MainWindow
     {
-        private void ImportXML()
-        {
 
+        private enum LANGUAGE
+        {
+            ID,
+            FR,
+            EN,
+            JP
         }
+        public void ImportXML(string filePath)
+        {
+            List<Word> words = DeserializeFromXml(filePath);
+
+            foreach (Word word in words)
+            {
+                DataRow row = dataTable.NewRow();
+
+                row[(int)LANGUAGE.FR] = word.FrFR;
+                row[(int)LANGUAGE.EN] = word.EnUS;
+                row[(int)LANGUAGE.JP] = word.JaJP;
+
+                dataTable.Rows.Add(row);
+            }
+        }
+
+        private List<Word> DeserializeFromXml(string filePath)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(Words));
+            using (FileStream fs = new FileStream(filePath, FileMode.Open))
+            {
+                Words words = (Words)serializer.Deserialize(fs);
+                return words.WordList;
+            }
+        }
+
+
 
         public void ExportXML(string filePath)
         {
             List<Word> words = new List<Word>();
 
-            for (int i = 0; i < 3; i++)
+            foreach (DataRow row in dataTable.Rows)
             {
-                Word word = new Word
-                {
-                    EnUS = "Poop",
-                    FrFR = "Caca",
-                    JaJP = "Cacaligato"
-                };
+                string rowLine = string.Join(";", row.ItemArray.Select(item => item.ToString()));
+                Word word = new Word();
+
+                word.EnUS = rowLine.Split(';')[(int)LANGUAGE.FR];
+                word.FrFR = rowLine.Split(';')[(int)LANGUAGE.EN];
+                word.JaJP = rowLine.Split(';')[(int)LANGUAGE.JP];
                 words.Add(word);
             }
 
@@ -44,7 +75,14 @@ namespace LocalizationManagerTool
 
             Console.WriteLine($"Le fichier XML a été créé : {filePath}");
         }
+
     }
 
+    [XmlRoot("Words")]
+    public class Words
+    {
+        [XmlElement("Word")]
+        public List<Word> WordList { get; set; }
+    }
 
 }
