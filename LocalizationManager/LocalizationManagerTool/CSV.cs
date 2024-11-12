@@ -18,7 +18,7 @@ namespace LocalizationManagerTool
         {
             // Initialize the DataTable
             dataTable = new DataTable();
-            dataGrid.ItemsSource = dataTable.DefaultView;
+            dataGrid.Columns.Clear();
 
             try
             {
@@ -65,6 +65,8 @@ namespace LocalizationManagerTool
             {
                 MessageBox.Show($"Erreur lors de l'importation du fichier : {ex.Message}");
             }
+
+            dataGrid.ItemsSource = dataTable.DefaultView;
         }
 
         private void ExportCsv(string filePath)
