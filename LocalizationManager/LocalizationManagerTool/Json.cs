@@ -18,7 +18,6 @@ namespace LocalizationManagerTool
         {
 
             
-            MessageBox.Show("La fonction est appelée !");
             string json = File.ReadAllText(filePath);
             List<Word> translation = JsonConvert.DeserializeObject<List<Word>>(json);
             
@@ -59,18 +58,8 @@ namespace LocalizationManagerTool
 [JsonObject(MemberSerialization.OptIn)]
 public class Word
 {
-    public string Id { get; set; }
     [JsonProperty]
-    public string EnUS { get; set; }
-    [JsonProperty]
-    public string FrFR { get; set; }
-
-    [JsonProperty]
-    public string EsES { get; set; }
-
-    [JsonProperty]
-
-    public string JaJP { get; set; }
+    public Dictionary<string, string> words { get; set; }
 }
 
 public class Translation
