@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Shapes;
 
 namespace LocalizationManagerTool
 {
@@ -26,27 +27,38 @@ namespace LocalizationManagerTool
                     // Nettoyer la DataTable avant de la remplir
                     dataTable.Clear();
 
+                    string line = sr.ReadLine();
                     // Lire les en-têtes
-                    string[] headers = sr.ReadLine().Split(';');
-                    foreach (var header in headers)
+                    if (line != null)
                     {
-                        if (!dataTable.Columns.Contains(header))
+                        string[] headers = line.Split(';');
+
+                        foreach (var header in headers)
                         {
-                            dataTable.Columns.Add(header);
+                            if (!dataTable.Columns.Contains(header))
+                            {
+                                dataTable.Columns.Add(header);
+                            }
                         }
+
+                        // Lire les lignes du fichier CSV
+                        while (!sr.EndOfStream)
+                        {
+                            string[] rows = sr.ReadLine().Split(';');
+                            DataRow dataRow = dataTable.NewRow();
+                            for (int i = 0; i < headers.Length; i++)
+                            {
+                                dataRow[i] = rows.Length > i ? rows[i] : string.Empty;
+                            }
+                            dataTable.Rows.Add(dataRow);
+                        }
+                    }
+                    else
+                    {
+                        // Gestion du cas où la ligne est null, par exemple en affichant un message d'erreur
+                        Console.WriteLine("La ligne est vide ou null.");
                     }
 
-                    // Lire les lignes du fichier CSV
-                    while (!sr.EndOfStream)
-                    {
-                        string[] rows = sr.ReadLine().Split(';');
-                        DataRow dataRow = dataTable.NewRow();
-                        for (int i = 0; i < headers.Length; i++)
-                        {
-                            dataRow[i] = rows.Length > i ? rows[i] : string.Empty;
-                        }
-                        dataTable.Rows.Add(dataRow);
-                    }
                 }
             }
             catch (Exception ex)
@@ -55,38 +67,31 @@ namespace LocalizationManagerTool
             }
         }
 
-        private void ExportCsv()
+        private void ExportCsv(string filePath)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog
-            {
-                Filter = "Fichiers CSV (*.csv)|*.csv|Tous les fichiers (*.*)|*.*",
-                FileName = "export.csv"
-            };
 
-            if (saveFileDialog.ShowDialog() == true)
+            try
             {
-                try
+                using (StreamWriter sw = new StreamWriter(filePath, false, Encoding.UTF8))
                 {
-                    using (StreamWriter sw = new StreamWriter(saveFileDialog.FileName, false, Encoding.UTF8))
+                    // Write headers
+                    string headerLine = string.Join(";", dataTable.Columns.Cast<DataColumn>().Select(column => column.ColumnName));
+                    sw.WriteLine(headerLine);
+
+                    // Write data
+                    foreach (DataRow row in dataTable.Rows)
                     {
-                        // Write headers
-                        string headerLine = string.Join(";", dataTable.Columns.Cast<DataColumn>().Select(column => column.ColumnName));
-                        sw.WriteLine(headerLine);
-
-                        // Write data
-                        foreach (DataRow row in dataTable.Rows)
-                        {
-                            string rowLine = string.Join(";", row.ItemArray.Select(item => item.ToString()));
-                            sw.WriteLine(rowLine);
-                        }
+                        string rowLine = string.Join(";", row.ItemArray.Select(item => item.ToString()));
+                        sw.WriteLine(rowLine);
                     }
-                    MessageBox.Show("Exportation réussie!");
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Erreur lors de l'exportation : {ex.Message}");
-                }
+                MessageBox.Show("Exportation réussie!");
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erreur lors de l'exportation : {ex.Message}");
+            }
+
         }
     }
 
