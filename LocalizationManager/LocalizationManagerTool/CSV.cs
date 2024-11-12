@@ -13,7 +13,7 @@ namespace LocalizationManagerTool
 {
     public partial class MainWindow
     {
-        private DataTable dataTable;
+
         private void ImportCsv()
         {
             // Initialize the DataTable
