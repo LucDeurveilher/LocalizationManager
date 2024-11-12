@@ -20,7 +20,7 @@ namespace LocalizationManagerTool
     {
         public List<string> Columns = new List<string>();
         string filePath;
-        private DataTable dataTable;
+        public DataTable dataTable;
         public MainWindow()
         {
             InitializeComponent();
@@ -36,12 +36,11 @@ namespace LocalizationManagerTool
         private void ImportMenuItem_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Fichiers XML (*.xml)|*.xml|Fichiers CSV (*.csv)|*.csv|Fichiers JSON (*.json)|*.json|Tous les fichiers (*.*)|*.*";
+            openFileDialog.Filter = "Tous les fichiers (*.*)|*.*|Fichiers XML (*.xml)|*.xml|Fichiers CSV (*.csv)|*.csv|Fichiers JSON (*.json)|*.json";
 
             if (openFileDialog.ShowDialog() == true)
             {
                 filePath = openFileDialog.FileName;
-                MessageBox.Show("Fichier sélectionné : " + filePath);
 
                 string extension = System.IO.Path.GetExtension(filePath);
 
@@ -55,7 +54,7 @@ namespace LocalizationManagerTool
                 }
                 else if (extension == ".json")
                 {
-                    ImportJson();
+                   // ImportJson();
                 }
                 else
                 {
@@ -87,7 +86,7 @@ namespace LocalizationManagerTool
                 }
                 else if (extension == ".json")
                 {
-                    ExportJson(filePath);
+                    //ExportJson(filePath);
                 }
                 else
                 {
@@ -104,6 +103,17 @@ namespace LocalizationManagerTool
             dataGrid.ItemsSource = dataTable.DefaultView;
         }
 
+        private void AddColumn_Click(object sender, RoutedEventArgs e)
+        {
+            dataTable.Columns.Add("POUET");
+            BoxName boxName = new BoxName();
+            boxName.Owner = this;
+            boxName.Show();
+            this.Hide();
+            dataGrid.ItemsSource = dataTable.DefaultView;
+            dataGrid.Items.Refresh();
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
@@ -114,6 +124,5 @@ namespace LocalizationManagerTool
 
         }
     }
-
 
 }

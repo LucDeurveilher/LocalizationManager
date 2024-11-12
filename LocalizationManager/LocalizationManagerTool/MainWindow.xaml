@@ -14,8 +14,9 @@
             </MenuItem>
             <MenuItem Header="Edit">
                 <MenuItem Header="Add Row" Click="AddRow_Click"/>
+                <MenuItem Header="Add Column" Click="AddColumn_Click"/>
             </MenuItem>
         </Menu>
-        <DataGrid Name="dataGrid" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,22,0,0"/>
+        <DataGrid Name="dataGrid" d:ItemsSource="{d:SampleData ItemCount=5}" AutoGenerateColumns="True" Margin="0,22,0,0"/>
     </Grid>
 </Window>
