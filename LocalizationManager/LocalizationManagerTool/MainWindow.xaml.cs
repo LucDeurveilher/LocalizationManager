@@ -25,7 +25,6 @@ namespace LocalizationManagerTool
             Columns.Add("id");
             Columns.Add("en");
             Columns.Add("fr");
-            Columns.Add("es");
             Columns.Add("ja");
 
             foreach (string column in Columns)
@@ -52,7 +51,7 @@ namespace LocalizationManagerTool
 
                 if (extension == ".xml")
                 {
-                    ImportXML();
+                    ImportXML(filePath);
                 }
                 else if (extension == ".csv")
                 {
