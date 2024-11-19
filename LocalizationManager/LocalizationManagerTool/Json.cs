@@ -103,5 +103,5 @@ public class Word
     [JsonProperty]
     public string Id { get; set; }
     [JsonProperty]
-    public Dictionary<string, string> words { get; set; }
+    public Dictionary<string, string> words = new Dictionary<string, string>();
 }
