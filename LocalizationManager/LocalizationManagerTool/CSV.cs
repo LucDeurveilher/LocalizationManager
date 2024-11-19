@@ -16,7 +16,7 @@ namespace LocalizationManagerTool
         private void ImportCsv()
         {
             //dataGrid.Columns.Clear();
-
+            
             try
             {
                 using (StreamReader sr = new StreamReader(filePath))
@@ -63,7 +63,8 @@ namespace LocalizationManagerTool
                 MessageBox.Show($"Erreur lors de l'importation du fichier : {ex.Message}");
             }
 
-            dataGrid.ItemsSource = dataTable.DefaultView;
+           dataGrid.ItemsSource = null;
+           dataGrid.ItemsSource = dataTable.DefaultView;
         }
 
         private void ExportCsv(string filePath)

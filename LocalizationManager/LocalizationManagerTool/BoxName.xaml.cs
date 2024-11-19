@@ -37,6 +37,7 @@ namespace LocalizationManagerTool
             ownerWindow.dataTable.Columns.Add(this.Luc.Text);
             Owner.Show();
             this.Close();
+            ownerWindow.dataGrid.ItemsSource = null;
             ownerWindow.dataGrid.ItemsSource = ownerWindow.dataTable.DefaultView;
         }
     }

@@ -105,14 +105,11 @@ namespace LocalizationManagerTool
 
         private void AddColumn_Click(object sender, RoutedEventArgs e)
         {
-            dataTable.Columns.Add("POUET");
+            
             BoxName boxName = new BoxName();
             boxName.Owner = this;
             boxName.Show();
             this.Hide();
-            dataGrid.ItemsSource = null;
-            dataGrid.ItemsSource = dataTable.DefaultView;
-            dataGrid.Items.Refresh();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
