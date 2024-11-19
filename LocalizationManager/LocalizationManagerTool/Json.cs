@@ -31,8 +31,6 @@ namespace LocalizationManagerTool
                
                     DataRow row = dataTable.NewRow();
                     dataTable.Rows.Add(row);
-                
-
             }
 
             dataGrid.ItemsSource = dataTable.DefaultView;
