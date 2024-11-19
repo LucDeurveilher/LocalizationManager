@@ -68,7 +68,7 @@ namespace LocalizationManagerTool
         private void ExportMenuItem_Click(object sender, RoutedEventArgs e)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Fichiers XML (*.xml)|*.xml|Fichiers CSV (*.csv)|*.csv|Fichiers JSON (*.json)|*.json";
+            saveFileDialog.Filter = "Fichiers XML (*.xml)|*.xml|Fichiers CSV (*.csv)|*.csv|Fichiers JSON (*.json)|*.json|Fichiers CSharp (*.cs)|*.cs";
 
             if (saveFileDialog.ShowDialog() == true)
             {
@@ -113,6 +113,7 @@ namespace LocalizationManagerTool
 
         private void AddColumn_Click(object sender, RoutedEventArgs e)
         {      
+
             BoxName boxName = new BoxName();
             boxName.Owner = this;
             boxName.Show();

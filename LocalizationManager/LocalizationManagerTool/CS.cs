@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,32 +17,48 @@ namespace LocalizationManagerTool
         {
 
             string nameClass = "public class Localization \n" +
-                    "{\n" +
-                    "   \n" +
-                    "}";
-            try
-            {
-                using (StreamWriter sw = new StreamWriter(filePath, false, Encoding.UTF8))
-                {
-                    sw.WriteLine(nameClass);
+                "{\n" +
+                "\n";
 
-                    /*
-                    // Write data
-                    foreach (DataRow row in dataTable.Rows)
-                    {
-                        string rowLine = string.Join(";", row.ItemArray.Select(item => item.ToString()));
-                        sw.WriteLine(rowLine);
-                    }
-                    */
-                }
-                MessageBox.Show("Exportation réussie!");
-            }
-            catch (Exception ex)
+              
+
+            using (StreamWriter sw = new StreamWriter(filePath))
             {
-                MessageBox.Show($"Erreur lors de l'exportation : {ex.Message}");
+
+                sw.WriteLine(nameClass);
+
+                int column = 0;
+
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    sw.WriteLine(ReturnFonction(row[0].ToString(), column));
+                    column++;
+                }
+
+                sw.WriteLine("\n }");
             }
 
         }
+
+        public string ReturnFonction(string _name, int column)
+        {
+            string FonctionName = $"static string Get{_name}(string _languageCode) \n" + "{";
+            int count = 0;
+            foreach (var header in dataTable.Columns)
+            {
+
+                FonctionName += $"if (_languageCode == \"{header}\") \n" + "{";
+
+                FonctionName += $"return \" {dataTable.Rows[column][count]}\"; "+"\n }";
+
+                count++;
+            }
+
+           
+            FonctionName += "}";
+            return FonctionName;
+        }
     }
 }
+
 
