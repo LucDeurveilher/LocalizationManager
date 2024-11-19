@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 
 namespace LocalizationManagerTool
 {
@@ -103,9 +104,15 @@ namespace LocalizationManagerTool
             dataGrid.ItemsSource = dataTable.DefaultView;
         }
 
-        private void AddColumn_Click(object sender, RoutedEventArgs e)
+        private void RemoveColumn_Click(object sender, RoutedEventArgs e)
         {
-            
+            BoxRemoveColumn boxRemoveColumn = new BoxRemoveColumn();
+            boxRemoveColumn.Owner = this;
+            boxRemoveColumn.Show();
+        }
+
+        private void AddColumn_Click(object sender, RoutedEventArgs e)
+        {      
             BoxName boxName = new BoxName();
             boxName.Owner = this;
             boxName.Show();
@@ -124,7 +131,15 @@ namespace LocalizationManagerTool
 
         private void ExportCS_Click(object sender, RoutedEventArgs e)
         {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Fichiers CSharp (.cs)|.cs";
 
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                string filePath = saveFileDialog.FileName;
+
+                ExportScriptCS(filePath);
+            }
         }
     }
 

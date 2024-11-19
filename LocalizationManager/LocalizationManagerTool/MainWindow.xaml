@@ -15,6 +15,7 @@
             <MenuItem Header="Edit">
                 <MenuItem Header="Add Row" Click="AddRow_Click"/>
                 <MenuItem Header="Add Column" Click="AddColumn_Click"/>
+                <MenuItem Header="Remove Column" Click="RemoveColumn_Click"/>
             </MenuItem>
             <MenuItem Header="Export Script">
                 <MenuItem Header="Export CS" Click="ExportCS_Click"/>
