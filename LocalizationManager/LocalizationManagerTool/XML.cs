@@ -3,6 +3,7 @@ using System.Data;
 using System.IO;
 using System.Reflection.PortableExecutable;
 using System.Windows;
+using System.Windows.Controls;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
@@ -16,22 +17,36 @@ namespace LocalizationManagerTool
         {
             XDocument xdoc = XDocument.Load(filePath);
             var words = xdoc.Descendants("Word");
+
+            List<string> tagNames = words.Elements().Select(element => element.Name.LocalName).ToList();
+
             dataTable.Clear();
 
-            foreach (var word in words)
+            foreach (var tagName in tagNames)
             {
-                DataRow dataRow = dataTable.NewRow();
-
-                for (int i = 0; i < dataTable.Columns.Count; i++)
+                if (!dataTable.Columns.Contains(tagName))
                 {
-                    string id = word.Element(dataTable.Columns[i].ToString())?.Value;
-
-                    dataRow[dataTable.Columns[i].ToString()] = id;
-
+                    dataTable.Columns.Add(tagName);
                 }
 
-                dataTable.Rows.Add(dataRow);
             }
+
+            //foreach (var word in words)
+            //{
+            //    DataRow dataRow = dataTable.NewRow();
+
+            //    for (int i = 0; i < dataTable.Columns.Count; i++)
+            //    {
+            //        string id = word.Element(dataTable.Columns[i].ToString())?.Value;
+
+            //        MessageBox.Show(id);
+            //        dataRow[dataTable.Columns[i].ToString()] = id;
+
+            //    }
+
+            //    dataTable.Rows.Add(dataRow);
+            //}
+            dataGrid.ItemsSource = null;
             dataGrid.ItemsSource = dataTable.DefaultView;
         }
 
@@ -55,6 +70,7 @@ namespace LocalizationManagerTool
                 }
 
                 //words.Add(word);
+
             }
 
 

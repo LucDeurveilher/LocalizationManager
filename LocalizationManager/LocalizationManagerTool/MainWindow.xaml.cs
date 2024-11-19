@@ -25,10 +25,10 @@ namespace LocalizationManagerTool
         {
             InitializeComponent();
             dataTable = new DataTable();
-            dataTable.Columns.Add("ID");
-            dataTable.Columns.Add("EN");
-            dataTable.Columns.Add("FR");
-            dataTable.Columns.Add("JP");
+            //dataTable.Columns.Add("ID");
+            //dataTable.Columns.Add("EN");
+            //dataTable.Columns.Add("FR");
+            //dataTable.Columns.Add("JP");
             dataGrid.ItemsSource = dataTable.DefaultView;
 
         }
@@ -110,6 +110,7 @@ namespace LocalizationManagerTool
             boxName.Owner = this;
             boxName.Show();
             this.Hide();
+            dataGrid.ItemsSource = null;
             dataGrid.ItemsSource = dataTable.DefaultView;
             dataGrid.Items.Refresh();
         }
