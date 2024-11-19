@@ -54,7 +54,7 @@ namespace LocalizationManagerTool
                 }
                 else if (extension == ".json")
                 {
-                    ImportJson();
+                    ImportJson(filePath);
                 }
                 else
                 {
@@ -86,7 +86,7 @@ namespace LocalizationManagerTool
                 }
                 else if (extension == ".json")
                 {
-                    //ExportJson(filePath);
+                    ExportJson(filePath);
                 }
                 else if (extension == ".cs")
                 {
@@ -122,6 +122,11 @@ namespace LocalizationManagerTool
         }
 
         private void Button_Edit(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ExportCS_Click(object sender, RoutedEventArgs e)
         {
 
         }

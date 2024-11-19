@@ -10,51 +10,87 @@ using System.Collections.Specialized;
 using System.Windows;
 using System.Text.Json.Serialization;
 using System.Data;
+using System.Windows.Controls;
 namespace LocalizationManagerTool
 {
     public partial class MainWindow
     {
-        private void ImportJson()
+        void ImportJson(string filePath)
         {
-
-            
-            MessageBox.Show("La fonction est appelée !");
+            // Charger le fichier JSON et le désérialiser
             string json = File.ReadAllText(filePath);
-            DataTable dataTable = new DataTable();
-            List<Word> translation = JsonConvert.DeserializeObject<List<Word>>(json);
-            foreach (var translationItem in translation[0].words.Keys)
+            List<Dictionary<string, string>> words = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(json);
+
+            if (words == null || words.Count == 0)
             {
-                Columns.Add(translationItem);
-            }
-            foreach (Word word in translation)
-            {
-               
-                    DataRow row = dataTable.NewRow();
-                    dataTable.Rows.Add(row);
+                MessageBox.Show("Le fichier JSON est vide ou invalide.");
+                return;
             }
 
-            dataGrid.ItemsSource = dataTable.DefaultView;
-        }
-        void ExportJson(string filePath)
-        {
-            List<Word> words = new List<Word>();
-            foreach (DataRow row in dataTable.Rows)
+            // Effacer la DataTable et configurer les colonnes
+            dataTable.Clear();
+            dataTable.Columns.Clear();
+
+            // Ajouter les colonnes dynamiquement en fonction des clés du premier objet
+            foreach (var key in words[0].Keys)
             {
-                Word word = new Word();
-                for (int i = 0; i < dataTable.Columns.Count; i++)
+                if (!dataTable.Columns.Contains(key))
                 {
-                    DataColumn column = dataTable.Columns[i];
-                    string name = column.ToString();
-                    word.words.Add(name, row.ItemArray.GetValue(i).ToString());
+                    dataTable.Columns.Add(key);
+                }
+            }
 
+            // Ajouter les lignes dans le DataTable
+            foreach (var word in words)
+            {
+                DataRow dataRow = dataTable.NewRow();
+
+                foreach (var key in word.Keys)
+                {
+                    dataRow[key] = word[key]; // Remplir chaque cellule avec la valeur correspondante
                 }
 
-                words.Add(word);
+                dataTable.Rows.Add(dataRow);
             }
-            string json = Newtonsoft.Json.JsonConvert.SerializeObject(words);
-            StreamWriter sw = new StreamWriter(filePath, false);
-            sw.Write(json);
-            sw.Close();
+
+            // Mettre à jour la source de données du DataGrid
+            dataGrid.ItemsSource = null;
+            dataGrid.ItemsSource = dataTable.DefaultView;
+        }
+
+        public void ExportJson(string filePath)
+        {
+            try
+            {
+                // Convertir le DataTable en une liste de dictionnaires
+                List<Dictionary<string, string>> words = new List<Dictionary<string, string>>();
+
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    Dictionary<string, string> word = new Dictionary<string, string>();
+
+                    foreach (DataColumn column in dataTable.Columns)
+                    {
+                        string columnName = column.ColumnName;
+                        string cellValue = row[column]?.ToString() ?? string.Empty; // Gérer les valeurs nulles
+                        word.Add(columnName, cellValue);
+                    }
+
+                    words.Add(word);
+                }
+
+                // Sérialiser la liste en JSON
+                string json = JsonConvert.SerializeObject(words, Formatting.Indented);
+
+                // Écrire le JSON dans le fichier
+                File.WriteAllText(filePath, json);
+
+                MessageBox.Show("Exportation réussie !");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erreur lors de l'exportation : {ex.Message}");
+            }
         }
     }
 
@@ -63,6 +99,9 @@ namespace LocalizationManagerTool
 [JsonObject(MemberSerialization.OptIn)]
 public class Word
 {
+
     [JsonProperty]
-    public Dictionary<string, string> words { get; set; }
+    public string Id { get; set; }
+    [JsonProperty]
+    public Dictionary<string, string> words = new Dictionary<string, string>();
 }
