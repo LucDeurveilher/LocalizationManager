@@ -5,10 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LocalizationManagerTool"
         mc:Ignorable="d"
-        Title="BoxName" Height="95" Width="202">
-    <Grid Margin="0,0,0,-6" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <TextBox Name = "Luc" Margin="0,0,0,0" TextWrapping="Wrap" Text="TextBox" TextChanged="TextBox_TextChanged"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="-66,-24,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+        Title="BoxName" Height="136" Width="225">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Width="194" Height="74">
+        <TextBox Name = "Luc" Margin="0,0,-1,0" Text="ColumnName"  VerticalAlignment="Top" TextWrapping="Wrap" GotFocus="Luc_GotFocus"/>
+        <Button
+
+    Width="41" VerticalAlignment="Bottom" Margin="0,52,0,0" HorizontalAlignment="Center" Content="Create" Click="Button_Click"/>
 
     </Grid>
 </Window>

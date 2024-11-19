@@ -21,13 +21,7 @@ namespace LocalizationManagerTool
     {
         public BoxName()
         {
-            
             InitializeComponent();
-        }
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -37,7 +31,13 @@ namespace LocalizationManagerTool
             ownerWindow.dataTable.Columns.Add(this.Luc.Text);
             Owner.Show();
             this.Close();
+            ownerWindow.dataGrid.ItemsSource = null;
             ownerWindow.dataGrid.ItemsSource = ownerWindow.dataTable.DefaultView;
+        }
+
+        private void Luc_GotFocus(object sender, RoutedEventArgs e)
+        {
+            Luc.SelectAll();
         }
     }
 }

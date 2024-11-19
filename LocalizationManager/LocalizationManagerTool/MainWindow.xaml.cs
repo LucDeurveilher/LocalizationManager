@@ -25,10 +25,10 @@ namespace LocalizationManagerTool
         {
             InitializeComponent();
             dataTable = new DataTable();
-            dataTable.Columns.Add("ID");
-            dataTable.Columns.Add("EN");
-            dataTable.Columns.Add("FR");
-            dataTable.Columns.Add("JP");
+            //dataTable.Columns.Add("ID");
+            //dataTable.Columns.Add("EN");
+            //dataTable.Columns.Add("FR");
+            //dataTable.Columns.Add("JP");
             dataGrid.ItemsSource = dataTable.DefaultView;
 
         }
@@ -105,13 +105,11 @@ namespace LocalizationManagerTool
 
         private void AddColumn_Click(object sender, RoutedEventArgs e)
         {
-            dataTable.Columns.Add("POUET");
+            
             BoxName boxName = new BoxName();
             boxName.Owner = this;
             boxName.Show();
             this.Hide();
-            dataGrid.ItemsSource = dataTable.DefaultView;
-            dataGrid.Items.Refresh();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
