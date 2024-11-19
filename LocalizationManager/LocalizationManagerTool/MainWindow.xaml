@@ -16,6 +16,9 @@
                 <MenuItem Header="Add Row" Click="AddRow_Click"/>
                 <MenuItem Header="Add Column" Click="AddColumn_Click"/>
             </MenuItem>
+            <MenuItem Header="Export Script">
+                <MenuItem Header="Export CS" Click="ExportCS_Click"/>
+            </MenuItem>
         </Menu>
         <DataGrid Name="dataGrid" d:ItemsSource="{d:SampleData ItemCount=5}" AutoGenerateColumns="True" Margin="0,22,0,0"/>
     </Grid>
