@@ -53,6 +53,7 @@ namespace LocalizationManagerTool
 
         public void ExportXML(string filePath)
         {
+            List<Word> words = new List<Word>();
 
             foreach (DataRow row in dataTable.Rows)
             {
@@ -66,14 +67,19 @@ namespace LocalizationManagerTool
 
                     string columName = column.ToString();
 
-                    word.words.Add(columName, rowLine.Split(';')[i]);
+                    if(rowLine.Split(';')[i] != "")
+                    {
+                        word.words.Add(columName, rowLine.Split(';')[i]);
+                    }
+
                 }
 
-                //words.Add(word);
+
+                words.Add(word);
 
             }
 
-
+            SerializeToXml(words, filePath);
         }
 
         public static void SerializeToXml(List<Word> words, string filePath)
@@ -81,20 +87,20 @@ namespace LocalizationManagerTool
             // Création de l'élément racine
             XElement root = new XElement("Words");
 
-            foreach (var word in words)
-            {
-                // Création de l'élément <Word> pour chaque mot
-                XElement wordElement = new XElement("Word");
-
-                foreach (var kvp in word.words)
+                foreach (var word in words)
                 {
-                    // Ajouter chaque traduction comme élément avec nom de la langue et texte
-                    XElement translationElement = new XElement(kvp.Key, kvp.Value);
-                    wordElement.Add(translationElement);
-                }
+                    // Création de l'élément <Word> pour chaque mot
+                    XElement wordElement = new XElement("Word");
 
-                root.Add(wordElement);
-            }
+                    foreach (var kvp in word.words)
+                    {
+                        // Ajouter chaque traduction comme élément avec nom de la langue et texte
+                        XElement translationElement = new XElement(kvp.Key, kvp.Value);
+                        wordElement.Add(translationElement);
+                    }
+
+                    root.Add(wordElement);
+                }
 
             // Sauvegarde dans le fichier
             XDocument document = new XDocument(root);
@@ -102,6 +108,7 @@ namespace LocalizationManagerTool
 
             Console.WriteLine($"Le fichier XML a été créé : {filePath}");
         }
+
 
 
     }
