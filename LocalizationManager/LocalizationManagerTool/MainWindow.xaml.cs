@@ -39,6 +39,8 @@ namespace LocalizationManagerTool
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Tous les fichiers (*.*)|*.*|Fichiers XML (*.xml)|*.xml|Fichiers CSV (*.csv)|*.csv|Fichiers JSON (*.json)|*.json";
 
+            dataTable.Columns.Clear();
+
             if (openFileDialog.ShowDialog() == true)
             {
                 filePath = openFileDialog.FileName;
