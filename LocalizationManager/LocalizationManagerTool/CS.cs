@@ -20,8 +20,6 @@ namespace LocalizationManagerTool
                 "{\n" +
                 "\n";
 
-              
-
             using (StreamWriter sw = new StreamWriter(filePath))
             {
 
@@ -46,6 +44,12 @@ namespace LocalizationManagerTool
             int count = 0;
             foreach (var header in dataTable.Columns)
             {
+                //skip ID
+                if (count == 0)
+                {
+                    count++;
+                    continue;
+                }
 
                 FonctionName += $"if (_languageCode == \"{header}\") \n" + "{";
 
