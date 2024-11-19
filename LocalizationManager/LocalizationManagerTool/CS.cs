@@ -53,7 +53,7 @@ namespace LocalizationManagerTool
 
                 FonctionName += $"if (_languageCode == \"{header}\") \n" + "{";
 
-                FonctionName += $"return \" {dataTable.Rows[column][count]}\"; "+"\n }";
+                FonctionName += $"return \"{dataTable.Rows[column][count]}\"; "+"\n }";
 
                 count++;
             }
