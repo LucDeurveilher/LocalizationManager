@@ -88,10 +88,6 @@ namespace LocalizationManagerTool
                 {
                     ExportJson(filePath);
                 }
-                else if (extension == ".cs")
-                {
-                    ExportScriptCS(filePath);
-                }
                 else
                 {
                     MessageBox.Show("Format de fichier inconnu.");
@@ -109,7 +105,7 @@ namespace LocalizationManagerTool
 
         private void AddColumn_Click(object sender, RoutedEventArgs e)
         {
-            
+
             BoxName boxName = new BoxName();
             boxName.Owner = this;
             boxName.Show();
@@ -128,7 +124,15 @@ namespace LocalizationManagerTool
 
         private void ExportCS_Click(object sender, RoutedEventArgs e)
         {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Fichiers CSharp (*.cs)|*.cs";
 
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                string filePath = saveFileDialog.FileName;
+
+                ExportScriptCS(filePath);
+            }
         }
     }
 

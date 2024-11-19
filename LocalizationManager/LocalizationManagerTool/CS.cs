@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,57 +15,47 @@ namespace LocalizationManagerTool
 
         private void ExportScriptCS(string filePath)
         {
-            StreamWriter sw = new StreamWriter(filePath, false, Encoding.UTF8);
 
             string nameClass = "public class Localization \n" +
-                    "{\n" +
-                    "   \n" +
+                "{\n" +
+                "   \n" +
 
-                    "}";
+                "}";
 
-
-            sw.WriteLine(nameClass);
-
-
-            using (StreamReader sr = new StreamReader(filePath))
+            using (StreamWriter sw = new StreamWriter(filePath))
             {
 
-                string line = sr.ReadLine();
-                // Lire les en-têtes
-                if (line != null)
+                sw.WriteLine(nameClass);
+
+                int column = 0;
+
+                foreach (DataRow row in dataTable.Rows)
                 {
-                    string[] headers = line.Split(';');
-
-                    foreach (var header in headers)
-                    {
-                        sw.WriteLine(ReturnFonction(header));
-                    }
-
-                    /*
-                    // Lire les lignes du fichier CSV
-                    while (!sr.EndOfStream)
-                    {
-                        string[] rows = sr.ReadLine().Split(';');
-                        DataRow dataRow = dataTable.NewRow();
-                        for (int i = 0; i < headers.Length; i++)
-                        {
-                            dataRow[i] = rows.Length > i ? rows[i] : string.Empty;
-                        }
-                        dataTable.Rows.Add(dataRow);
-                    }
-                    */
+                    sw.WriteLine(ReturnFonction(row[0].ToString(), column));
+                    column++;
                 }
-                MessageBox.Show("Exportation réussie!");
+
             }
-
-
 
         }
 
-        public string ReturnFonction(string _name)
+        public string ReturnFonction(string _name, int column)
         {
-            string FonctionName = $"static string Get{_name}(string _languageCode) \n" + "{}";
+            string FonctionName = $"static string Get{_name}(string _languageCode) \n" + "{";
+            int count = 0;
+            foreach (var header in dataTable.Columns)
+            {
 
+                FonctionName += $"if (_languageCode == \"{header}\") \n" + "{";
+
+                FonctionName += $"return \" {dataTable.Rows[column][count]}\"; "+"\n }";
+
+                count++;
+            }
+
+            
+
+            FonctionName += "}";
             return FonctionName;
         }
     }
