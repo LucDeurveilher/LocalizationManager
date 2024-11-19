@@ -54,7 +54,7 @@ namespace LocalizationManagerTool
                 }
                 else if (extension == ".json")
                 {
-                    ImportJson(filePath);
+                    ImportJson();
                 }
                 else
                 {

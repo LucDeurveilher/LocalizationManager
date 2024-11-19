@@ -54,7 +54,7 @@ namespace LocalizationManagerTool
                     word.words.Add(columName, rowLine.Split(';')[i]);
                 }
 
-                words.Add(word);
+                //words.Add(word);
             }
 
 
