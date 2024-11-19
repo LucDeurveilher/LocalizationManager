@@ -14,34 +14,60 @@ namespace LocalizationManagerTool
 
         private void ExportScriptCS(string filePath)
         {
+            StreamWriter sw = new StreamWriter(filePath, false, Encoding.UTF8);
 
             string nameClass = "public class Localization \n" +
                     "{\n" +
                     "   \n" +
+
                     "}";
-            try
+
+
+            sw.WriteLine(nameClass);
+
+
+            using (StreamReader sr = new StreamReader(filePath))
             {
-                using (StreamWriter sw = new StreamWriter(filePath, false, Encoding.UTF8))
+
+                string line = sr.ReadLine();
+                // Lire les en-têtes
+                if (line != null)
                 {
-                    sw.WriteLine(nameClass);
+                    string[] headers = line.Split(';');
+
+                    foreach (var header in headers)
+                    {
+                        sw.WriteLine(ReturnFonction(header));
+                    }
 
                     /*
-                    // Write data
-                    foreach (DataRow row in dataTable.Rows)
+                    // Lire les lignes du fichier CSV
+                    while (!sr.EndOfStream)
                     {
-                        string rowLine = string.Join(";", row.ItemArray.Select(item => item.ToString()));
-                        sw.WriteLine(rowLine);
+                        string[] rows = sr.ReadLine().Split(';');
+                        DataRow dataRow = dataTable.NewRow();
+                        for (int i = 0; i < headers.Length; i++)
+                        {
+                            dataRow[i] = rows.Length > i ? rows[i] : string.Empty;
+                        }
+                        dataTable.Rows.Add(dataRow);
                     }
                     */
                 }
                 MessageBox.Show("Exportation réussie!");
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Erreur lors de l'exportation : {ex.Message}");
-            }
 
+
+
+        }
+
+        public string ReturnFonction(string _name)
+        {
+            string FonctionName = $"static string Get{_name}(string _languageCode) \n" + "{}";
+
+            return FonctionName;
         }
     }
 }
+
 

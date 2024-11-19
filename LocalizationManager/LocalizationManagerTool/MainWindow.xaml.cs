@@ -67,7 +67,7 @@ namespace LocalizationManagerTool
         private void ExportMenuItem_Click(object sender, RoutedEventArgs e)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Fichiers XML (*.xml)|*.xml|Fichiers CSV (*.csv)|*.csv|Fichiers JSON (*.json)|*.json";
+            saveFileDialog.Filter = "Fichiers XML (*.xml)|*.xml|Fichiers CSV (*.csv)|*.csv|Fichiers JSON (*.json)|*.json|Fichiers CSharp (*.cs)|*.cs";
 
             if (saveFileDialog.ShowDialog() == true)
             {
@@ -87,6 +87,10 @@ namespace LocalizationManagerTool
                 else if (extension == ".json")
                 {
                     //ExportJson(filePath);
+                }
+                else if (extension == ".cs")
+                {
+                    ExportScriptCS(filePath);
                 }
                 else
                 {
