@@ -31,21 +31,21 @@ namespace LocalizationManagerTool
 
             }
 
-            //foreach (var word in words)
-            //{
-            //    DataRow dataRow = dataTable.NewRow();
+            foreach (var word in words)
+            {
+                DataRow dataRow = dataTable.NewRow();
 
-            //    for (int i = 0; i < dataTable.Columns.Count; i++)
-            //    {
-            //        string id = word.Element(dataTable.Columns[i].ToString())?.Value;
+                for (int i = 0; i < dataTable.Columns.Count; i++)
+                {
+                    string id = word.Element(dataTable.Columns[i].ToString())?.Value;
 
-            //        MessageBox.Show(id);
-            //        dataRow[dataTable.Columns[i].ToString()] = id;
+                    dataRow[dataTable.Columns[i].ToString()] = id;
 
-            //    }
+                }
 
-            //    dataTable.Rows.Add(dataRow);
-            //}
+                dataTable.Rows.Add(dataRow);
+            }
+
             dataGrid.ItemsSource = null;
             dataGrid.ItemsSource = dataTable.DefaultView;
         }
