@@ -18,9 +18,9 @@ namespace LocalizationManagerTool
 
             string nameClass = "public class Localization \n" +
                 "{\n" +
-                "   \n" +
+                "\n";
 
-                "}";
+              
 
             using (StreamWriter sw = new StreamWriter(filePath))
             {
@@ -35,6 +35,7 @@ namespace LocalizationManagerTool
                     column++;
                 }
 
+                sw.WriteLine("\n }");
             }
 
         }
@@ -53,8 +54,7 @@ namespace LocalizationManagerTool
                 count++;
             }
 
-            
-
+           
             FonctionName += "}";
             return FonctionName;
         }
