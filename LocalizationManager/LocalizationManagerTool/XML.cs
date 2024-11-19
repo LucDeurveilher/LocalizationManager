@@ -38,7 +38,6 @@ namespace LocalizationManagerTool
 
         public void ExportXML(string filePath)
         {
-            List<Word> words = new List<Word>();
 
             foreach (DataRow row in dataTable.Rows)
             {
@@ -58,7 +57,7 @@ namespace LocalizationManagerTool
                 words.Add(word);
             }
 
-            SerializeToXml(words, filePath);
+
         }
 
         public static void SerializeToXml(List<Word> words, string filePath)
