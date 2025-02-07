@@ -20,6 +20,7 @@
             <MenuItem Header="Export Script">
                 <MenuItem Header="Export CS" Click="ExportCS_Click"/>
             </MenuItem>
+            <ComboBox Width="120"/>
         </Menu>
         <DataGrid Name="dataGrid" d:ItemsSource="{d:SampleData ItemCount=5}" AutoGenerateColumns="True" Margin="0,22,0,0"/>
     </Grid>
